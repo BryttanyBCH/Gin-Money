@@ -3,14 +3,14 @@
 C D H S*/
 #include"card.h"
 
-int Card::Card(int number,char type) {
+Card::Card(int number,char type) {
     cardNum=number;
     cardType=type;
     if(number > 10) {pointVal=10;}
     else {pointVal=number;}
 }
 
-int Card::Card(int number,int type) {
+Card::Card(int number,int type) {
     cardNum=number;
     if(number > 10) {pointVal=10;}
     else {pointVal=number;}
@@ -21,7 +21,7 @@ int Card::Card(int number,int type) {
         case 2:
         cardType='D';
         break;
-        case 3;
+        case 3:
         cardType='H';
         break;
         default:
