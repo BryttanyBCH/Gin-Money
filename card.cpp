@@ -1,7 +1,7 @@
 /*♣ ♦ ♥ ♠
 1 2 3 4
 C D H S*/
-#include"card.h"
+#include"card.h" //testing testing testing
 
 Card::Card(int number,char type) {
     cardNum=number;
