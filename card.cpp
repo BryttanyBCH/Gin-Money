@@ -4,6 +4,7 @@ C D H S*/
 #include"card.h"
 #include<iostream>
 Card::Card(int number,int type) {
+    cardIndex = number + (type*13-13); // for sorting
     cardNum=number;
     if(number > 10) {cardPoints=10;}
     else {cardPoints=number;}
@@ -20,10 +21,14 @@ Card::Card(int number,int type) {
         cardType='H';
         cardDisplay="♥";
         break;
-        default:
+        default: //I made spades the default case instead of case 4 to omit an unneeded comparison
         cardType='S';
         cardDisplay="♠";
+        break;
     }
+    //this switch turns the entered number value into a character 
+    //that can be easily printed and compaired to other cards 
+    //(when checking combos for scoring)
     if(!(number <= 10 && number > 1)) {
         if(number == 13) {cardDisplay = "K" + cardDisplay;}
         else if(number == 12) {cardDisplay = "Q" + cardDisplay;}
@@ -31,11 +36,10 @@ Card::Card(int number,int type) {
         else {cardDisplay = "A" + cardDisplay;}
     }
     else {cardDisplay = std::to_string(number) + cardDisplay;}
-    //this switch turns the entered number value into a character 
-    //that can be easily printed and compaired to other cards 
-    //(when checking combos for scoring)
+    
 }
 
+int Card::getIndex() {return cardIndex;}
 int Card::getCardPoints() {return cardPoints;}
 char Card::getCardType() {return cardType;}
 int Card::getCardNum() {return cardNum;}
