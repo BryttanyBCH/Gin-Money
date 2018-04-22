@@ -5,21 +5,6 @@ Gin Rummy For UNC Charlotte
 1 2 3 4
 C D H S
 
-
-In-Progress Plan:
-Create a deck vector and fill it with a predefined set of cards
-Shuffle with #include <algorithm>  std::random_shuffle(beginning,end) for vectors
-Itterate through the deck, starting from the top: deal 10 cards to the play and 10 to the computer
-Put one card's information into the visible deck (from the normal deck), and show the player their deck on the bottom of the screen
-The player can either draw from the deck (which doesn't show what they will get but pulls cards from the vector) or a visible deck.
-They do this by entering Left or Right (for left deck or right deck, where the normal deck is on the left)
-After selecting a deck, the card from that deck is replicated into a intermediate variable, so that the game knows to put it into the player's vector when their turn concludes
-This intermediate variable will ensure the player doesn't throw away the card they just got IF IT CAME FROM THE KNOWN DECK (this is not allowed). If the card came from the unknown deck then it is fine to send it to the known deck.
-If intermediate variable card = top of known deck vector, do not let the player drop the card into the known deck again
-
-Making it easier for the player to see non dead wood by sorting deck: make a sort method/function for the cards
-We will need to make this method from scratch I think
-
 Aces=1 point
 Face card=10 points
 Numbered cards have a point value of their number

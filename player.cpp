@@ -34,7 +34,7 @@ void Player::recieveCard(Card cardIn)
 void Player::displayDebug()
 {
     for (auto e : cardsPosessed) {
-        std::cout << e.cardDisplay();
+        std::cout << e.getCardDisplay();
     }
     std::cout << std::endl;
 }

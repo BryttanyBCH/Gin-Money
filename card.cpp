@@ -1,62 +1,54 @@
 // ♣ ♦ ♥ ♠
 #include "card.h"
 
-Card::Card(int cardNumIn, int suitNumIn)        // card constructor
+Card::Card(int cardNumIn, int suitNumIn)            // card constructor
 {
-    // if statement assigns card number, T is for ten!
-    if (cardNumIn == 1) {
-        cardNum = "A";
-    } else if (cardNumIn <= 9) {
-        cardNum = std::to_string(cardNumIn);
-    } else if (cardNumIn == 10) {
-        cardNum = "T";
-    } else if (cardNumIn == 11) {
-        cardNum = "J";
-    } else if (cardNumIn == 12) {
-        cardNum = "Q";
-    } else if (cardNumIn == 13) {
-        cardNum = "K";
-    } else {
-        cardNum = "?";  // for troubleshooting
-    }
+    cardIndex = cardNumIn + (suitNumIn*13-13);      // for sorting: records the card's initial position in the deck
     
-    // switch statement assigns cards with suit
-    switch (suitNumIn) {
+    cardSuit = suitNumIn;                           // also for sorting: for making sure that ascending melds and same-card melds are valid 
+    
+    if(cardNumIn > 10) {cardPoints=10;}             // sets the card's point value
+    else {cardPoints=cardNumIn;}
+   
+    switch(suitNumIn) {                             // Sets the pretty suit character depending on the value of the suit
         case 1:
-            cardSuit = "♣";
-            break;
+        cardDisplay="♣";
+        break;
         case 2:
-            cardSuit = "♦";
-            break;
+        cardDisplay="♦";
+        break;
         case 3:
-            cardSuit = "♥";
-            break;
-        case 4:
-            cardSuit = "♠";
-            break;
-        default:
-            cardSuit = "?";     // for troubleshooting
-            break;
+        cardDisplay="♥";
+        break;
+        default:                                    // I made spades the default case instead of case 4 to omit an unneeded comparison
+        cardDisplay="♠";
+        break;
     }
     
-    // unique index number (for sorting) is assigned to cards as they are defined
-    cardIndex = cardNumIn + ((suitNumIn * 13) - 13);
+    std::string brace = "[";                        // I LOVE C++! (You cannot add two literal strings, the leftmost string must be a string variable)
+    
+    if(!(cardNumIn < 10 && cardNumIn > 1)) {        // The card class has been updated so that it can now print a 10 without having to resort to printing a 'T'
+        if(cardNumIn == 13) {cardDisplay = brace + " K" + cardDisplay + "]";}
+        else if(cardNumIn == 12) {cardDisplay = brace + " Q" + cardDisplay + "]";}
+        else if(cardNumIn == 11) {cardDisplay = brace + " J" + cardDisplay + "]";}
+        else if(cardNumIn == 1) {cardDisplay = brace + " A" + cardDisplay + "]";}
+        else {cardDisplay = brace + "10" + cardDisplay + "]";}
+    }
+    else {cardDisplay = brace + " " + std::to_string(cardNumIn) + cardDisplay + "]";}
+    
 }
 
-std::string Card::cardDisplay()     // returns a string icon of a given card
-{
-    std::string cardOut = "[" + cardNum + cardSuit + "]";
-    return cardOut;
-}
+int Card::getIndex() {return cardIndex;}            // Returns the index of the card, useful for sorting and checking melds
 
-int Card::getIndex()
-{
-    return cardIndex;
-}
+int Card::getCardPoints() {return cardPoints;}      // Returns the point value of the card, for scoring
 
-Card& Card::operator=(const Card& cardIn)
+int Card::getSuit() {return cardSuit;}              // Returns the suit of the card, useful for checking melds
+
+std::string Card::getCardDisplay() {return cardDisplay;}
+
+Card& Card::operator=(const Card& cardIn)           // Overloaded equal operator
 {
-    cardSuit = cardIn.cardSuit;
-    cardNum = cardIn.cardNum;
+    cardPoints = cardIn.cardPoints;
+    cardDisplay = cardIn.cardDisplay;
     cardIndex = cardIn.cardIndex;
 }

@@ -30,7 +30,7 @@ void Pile::recieveCard(Card cardIn)
 void Pile::displayDebug()
 {
     for (auto e : cardsPosessed) {
-        std::cout << e.cardDisplay();
+        std::cout << e.getCardDisplay();
     }
     std::cout << std::endl;
 }
@@ -56,5 +56,5 @@ std::string Pile::getName()
 // returns top card, rename?
 std::string Pile::getTopCard()
 {
-    return cardsPosessed.back().cardDisplay();
+    return cardsPosessed.back().getCardDisplay();
 }
