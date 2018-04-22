@@ -25,7 +25,7 @@ Card::Card(int cardNumIn, int suitNumIn)            // card constructor
         break;
     }
     
-    std::string brace = "[";                        // I LOVE C++! (You cannot add two literal strings, the leftmost string must be a string variable)
+    std::string brace = "[";                        // You cannot add two string literals, the leftmost string must be a string variable
     
     if(!(cardNumIn < 10 && cardNumIn > 1)) {        // The card class has been updated so that it can now print a 10 without having to resort to printing a 'T'
         if(cardNumIn == 13) {cardDisplay = brace + " K" + cardDisplay + "]";}
@@ -36,6 +36,13 @@ Card::Card(int cardNumIn, int suitNumIn)            // card constructor
     }
     else {cardDisplay = brace + " " + std::to_string(cardNumIn) + cardDisplay + "]";}
     
+}
+
+Card::Card() {
+    cardDisplay = "[XXX]";
+    cardIndex = 0;
+    cardSuit = 0;
+    cardPoints = 0;
 }
 
 int Card::getIndex() {return cardIndex;}            // Returns the index of the card, useful for sorting and checking melds
@@ -51,4 +58,5 @@ Card& Card::operator=(const Card& cardIn)           // Overloaded equal operator
     cardPoints = cardIn.cardPoints;
     cardDisplay = cardIn.cardDisplay;
     cardIndex = cardIn.cardIndex;
+    cardSuit = cardIn.cardSuit;
 }

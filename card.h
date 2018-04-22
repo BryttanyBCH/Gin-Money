@@ -8,6 +8,7 @@ class Card
     public:
        
         Card(int cardNumIn, int suitNumIn);     // card constructor
+        Card();                                 // default constructor, used as a blank card for the trash deck if the player draws from it first
         std::string getCardDisplay();           // displays the card
         int getIndex();                         // for sorting, gets where the card was in the original deck
         int getSuit();                          // for sorting. Example: if c1.getSuit() != c3.getSuit() != c3.getSuit() and the indexes of the cards are each 13 apart, then there is a meld
