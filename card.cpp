@@ -1,46 +1,62 @@
-/*♣ ♦ ♥ ♠
-1 2 3 4
-C D H S*/
-#include"card.h"
-#include<iostream>
-Card::Card(int number,int type) {
-    cardIndex = number + (type*13-13); // for sorting
-    cardNum=number;
-    if(number > 10) {cardPoints=10;}
-    else {cardPoints=number;}
-    switch(type) { 
-        case 1:
-        cardType='C';
-        cardDisplay="♣";
-        break;
-        case 2:
-        cardType='D';
-        cardDisplay="♦";
-        break;
-        case 3:
-        cardType='H';
-        cardDisplay="♥";
-        break;
-        default: //I made spades the default case instead of case 4 to omit an unneeded comparison
-        cardType='S';
-        cardDisplay="♠";
-        break;
+// ♣ ♦ ♥ ♠
+#include "card.h"
+
+Card::Card(int cardNumIn, int suitNumIn)        // card constructor
+{
+    // if statement assigns card number, T is for ten!
+    if (cardNumIn == 1) {
+        cardNum = "A";
+    } else if (cardNumIn <= 9) {
+        cardNum = std::to_string(cardNumIn);
+    } else if (cardNumIn == 10) {
+        cardNum = "T";
+    } else if (cardNumIn == 11) {
+        cardNum = "J";
+    } else if (cardNumIn == 12) {
+        cardNum = "Q";
+    } else if (cardNumIn == 13) {
+        cardNum = "K";
+    } else {
+        cardNum = "?";  // for troubleshooting
     }
-    //this switch turns the entered number value into a character 
-    //that can be easily printed and compaired to other cards 
-    //(when checking combos for scoring)
-    if(!(number <= 10 && number > 1)) {
-        if(number == 13) {cardDisplay = "K" + cardDisplay;}
-        else if(number == 12) {cardDisplay = "Q" + cardDisplay;}
-        else if(number == 11) {cardDisplay = "J" + cardDisplay;}
-        else {cardDisplay = "A" + cardDisplay;}
-    }
-    else {cardDisplay = std::to_string(number) + cardDisplay;}
     
+    // switch statement assigns cards with suit
+    switch (suitNumIn) {
+        case 1:
+            cardSuit = "♣";
+            break;
+        case 2:
+            cardSuit = "♦";
+            break;
+        case 3:
+            cardSuit = "♥";
+            break;
+        case 4:
+            cardSuit = "♠";
+            break;
+        default:
+            cardSuit = "?";     // for troubleshooting
+            break;
+    }
+    
+    // unique index number (for sorting) is assigned to cards as they are defined
+    cardIndex = cardNumIn + ((suitNumIn * 13) - 13);
 }
 
-int Card::getIndex() {return cardIndex;}
-int Card::getCardPoints() {return cardPoints;}
-char Card::getCardType() {return cardType;}
-int Card::getCardNum() {return cardNum;}
-void Card::cardPrint() {std::cout << "[" << cardDisplay << "]";}
+std::string Card::cardDisplay()     // returns a string icon of a given card
+{
+    std::string cardOut = "[" + cardNum + cardSuit + "]";
+    return cardOut;
+}
+
+int Card::getIndex()
+{
+    return cardIndex;
+}
+
+Card& Card::operator=(const Card& cardIn)
+{
+    cardSuit = cardIn.cardSuit;
+    cardNum = cardIn.cardNum;
+    cardIndex = cardIn.cardIndex;
+}
