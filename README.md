@@ -1,3 +1,4 @@
+http://www.dummies.com/games/card-games/gin-rummy/how-to-play-gin-rummy/
 # Gin-Rummy
 Gin Rummy For UNC Charlotte
 

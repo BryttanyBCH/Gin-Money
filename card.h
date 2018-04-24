@@ -14,6 +14,13 @@ class Card
         int getSuit();                          // for sorting. Example: if c1.getSuit() != c3.getSuit() != c3.getSuit() and the indexes of the cards are each 13 apart, then there is a meld
         int getCardPoints();                    // Returns the point value of the card    
         Card& operator=(const Card& cardIn);    // for setting cards equal to each other
+        bool operator<(Card& right) {return this->cardPoints < right.cardPoints;}
+        bool operator>(Card& right) {return this->cardPoints > right.cardPoints;}
+        bool operator<=(Card& right) {return this->cardPoints <= right.cardPoints;}
+        bool operator>=(Card& right) {return this->cardPoints >= right.cardPoints;}
+        bool operator==(Card&right) {return this->cardPoints == right.cardPoints;}
+        bool operator!=(Card&right) {return this->cardPoints != right.cardPoints;}
+        
         
     private:
        

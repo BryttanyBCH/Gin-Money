@@ -1,6 +1,7 @@
 #include "pile.h"
 #include "player.h"
 #include "interface.h"
+#include "ai.h"
 
 // this is for testing
 int main() 
@@ -9,7 +10,7 @@ int main()
     Pile draw("Draw");
     Pile trash("Trash");
     Player p1("Jim");
-    Player p2("UnbeataBill");
+    AI p2("UnbeataBill",1);
     
     // defining the interface? idk whatever
     Interface game("Gin Money");

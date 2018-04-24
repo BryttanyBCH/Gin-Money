@@ -53,6 +53,8 @@ int Card::getSuit() {return cardSuit;}              // Returns the suit of the c
 
 std::string Card::getCardDisplay() {return cardDisplay;}
 
+//There are no overloaded operators for indexes because one card will never (hopefully) have the same index as another unless it is a scanned card by the AI
+//Even then it would be better to just compare the poitns and the suit of that cloned card to see if they are the same
 Card& Card::operator=(const Card& cardIn)           // Overloaded equal operator
 {
     cardPoints = cardIn.cardPoints;
@@ -60,3 +62,13 @@ Card& Card::operator=(const Card& cardIn)           // Overloaded equal operator
     cardIndex = cardIn.cardIndex;
     cardSuit = cardIn.cardSuit;
 }
+
+//These operators are now defined inline in the card header file
+/*bool Card::operator<(Card& right) {return this.cardPoints < right.cardPoints;}
+bool Card::operator>(Card& right) {return this.cardPoints > right.cardPoints;}
+bool Card::operator<=(Card& right) {return this.cardPoints <= right.cardPoints;}
+bool Card::operator>=(Card& right) {return this.cardPoints >= right.cardPoints;}
+bool Card::operator==(Card&right) {return this.cardPoints == right.cardPoints;}
+bool Card::operator!=(Card&right) {return this.cardPoints != right.cardPoints;}*/
+
+
