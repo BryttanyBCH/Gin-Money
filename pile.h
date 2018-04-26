@@ -13,6 +13,7 @@ class Pile: public Container {          // Piles: They can only exchange their t
         void makeDeck();                // generates a deck of 52 cards
         std::string getName();           
         std::string getTopCard();       // returns top card, rename?
+        bool isEmpty();
         //Card scan();
         
     private:

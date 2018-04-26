@@ -18,8 +18,8 @@ class Card
         bool operator>(Card& right) {return this->cardPoints > right.cardPoints;}
         bool operator<=(Card& right) {return this->cardPoints <= right.cardPoints;}
         bool operator>=(Card& right) {return this->cardPoints >= right.cardPoints;}
-        bool operator==(Card&right) {return this->cardPoints == right.cardPoints;}
-        bool operator!=(Card&right) {return this->cardPoints != right.cardPoints;}
+        bool operator==(Card& right) {return this->cardPoints == right.cardPoints;}
+        bool operator!=(Card& right) {return this->cardPoints != right.cardPoints;}
         
         
     private:

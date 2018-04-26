@@ -9,8 +9,8 @@ int main()
     // defining containers
     Pile draw("Draw");
     Pile trash("Trash");
-    Player p1("Jim");
-    AI p2("UnbeataBill",1);
+    Player p1("Count Deadwood");
+    AI p2("UnbeataBill");
     
     // defining the interface? idk whatever
     Interface game("Gin Money");
@@ -29,8 +29,8 @@ int main()
         
     for (int i = 1; i <= 10; i++)
         p2.recieveCard(draw.sendCard());
-        
-        
+    
+
     int input;
     Card blank;
     trash.recieveCard(blank);
@@ -83,6 +83,6 @@ int main()
     std::cout << "Ok what card do you want to throw away from your deck\n";
     trash.recieveCard(p2.sendCard());
     }
-   
+
     return 0;
 }

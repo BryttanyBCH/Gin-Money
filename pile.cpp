@@ -63,5 +63,12 @@ std::string Pile::getName()
 // returns top card, rename?
 std::string Pile::getTopCard()
 {
+    if(cardsPosessed.size() == 0)
+        return "[   ]";
     return cardsPosessed.back().getCardDisplay();
+}
+
+bool Pile::isEmpty()
+{
+    return cardsPosessed.size() == 0;
 }
