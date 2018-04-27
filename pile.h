@@ -11,10 +11,13 @@ class Pile: public Container {          // Piles: They can only exchange their t
         void recieveCard(Card cardIn);  // adds card to possession, presumably from sendCard()
         void displayDebug();            // couts the possessed cards, for debugging
         void makeDeck();                // generates a deck of 52 cards
+        void emptyDeck();
         std::string getName();           
         std::string getTopCard();       // returns top card, rename?
         bool isEmpty();
         //Card scan();
+        
+        Pile& operator=(const Pile& pileIn); 
         
     private:
         

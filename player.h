@@ -13,7 +13,7 @@ class Player: public Container {        // Players: They get to choose which car
         void recieveCard(Card cardIn);  // adds card to possession, presumably from sendCard()
         void displayDebug();            // couts possession of cards, is actually used outside of debug
         std::string getName(); 
-        bool knockSend(Player target, int cardOutIndex);
+        bool knockSend(Player& target, int cardOutIndex);
         int getHandSize(void);          //this will usually be 10, but is needed during knocking
         std::vector<int> getDWIndexes(void);
         std::vector<int> anyMelds(void);
@@ -22,6 +22,8 @@ class Player: public Container {        // Players: They get to choose which car
         std::vector<int> anyRuns();
         std::vector<int> anySets();
         void findDeadwood();
+        
+        Player& operator=(const Player& playerIn);
     
     protected: //needs to be protected so that ai can inherit these variables
         std::vector<Card> cardsPosessed;

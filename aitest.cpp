@@ -11,18 +11,15 @@ int main()
     Pile trash("Trash");
     AI lilguy("lilguy");
     
-    std::cout<<'a';
     draw.makeDeck();
     
     //give some cards to the lil dude
     for (int i = 1; i <= 10; i++)
         lilguy.recieveCard(draw.sendCard());
         
-    std::cout<<'b';
     Card blank;
     trash.recieveCard(blank);
     trash.recieveCard(draw.sendCard());
-    std::cout<<'c';
     
     int count = 0;
     while(!lilguy.willKnock() && !draw.isEmpty() && count < 50) {
@@ -37,8 +34,11 @@ int main()
         count++;
     }
     
-    if(!draw.isEmpty() && count < 49)
+    if(!draw.isEmpty() && count < 49) {
         std::cout << "The absolute madman knocked!!!!" << std::endl;
+        std::cout << "[???] " << trash.getTopCard() << "  ";
+        lilguy.displayDebug();
+    }
     else
         std::cout << "No more cards" << std::endl;
 }

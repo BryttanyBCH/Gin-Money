@@ -55,40 +55,37 @@ std::string Player::getName()
 //anyRuns checks if the deck has any runs in it and returns a vector of the cards that DON'T MAKE UP RUNS
 std::vector<int> Player::anyRuns(void) { //need to put in header file vector<Card> startPos=deckIn iterator dumb int good 
     std::vector<int> deadwood = {};
-    //std::cout << "Let's find what isn't a run\n";
+    
         for(int j=0;j<cardsPosessed.size()-1;j++) { //The last card of the vector should not be called in this loop
-            //std::cout << "j is " << j << std::endl;
+            
             int k=0;
-            //std::cout << "k is " << k << std::endl;
-            while((cardsPosessed.at(k+1).getIndex() == cardsPosessed.at(k).getIndex()+1) && (cardsPosessed.at(k+1).getSuit() == cardsPosessed.at(k).getSuit()) && (k+1<cardsPosessed.size()-1)) {
-                //std::cout << "cardsPosessed.at(k+1).getIndex(): " << cardsPosessed.at(k+1).getIndex() << std::endl;
-                //std::cout << "cardsPosessed.at(k).getIndex()+1): " << cardsPosessed.at(k).getIndex()+1 << std::endl;
-                //std::cout << "cardsPosessed.at(k+1).getSuit(): " << cardsPosessed.at(k+1).getSuit() << std::endl;
-                //std::cout << "cardsPosessed.at(k).getSuit(): " << cardsPosessed.at(k).getSuit() << std::endl;
+            //std::cout << "j is " << j << std::endl;std::cout << "k is " << k << std::endl;
+            
+            //this while loop used to check the card that was at k, but k was fixed so that it started at zero. That is why only the first few parts of the deck got checked
+            while((j+k+1<cardsPosessed.size()-1) && (cardsPosessed.at(j+k+1).getIndex() == cardsPosessed.at(j+k).getIndex()+1) && (cardsPosessed.at(j+k+1).getSuit() == cardsPosessed.at(j+k).getSuit())) {
+            //std::cout << " The card at j is " << cardsPosessed.at(j).getCardDisplay() << " and j is " << j << "\n";
+            //std::cout << " The card at k is " << cardsPosessed.at(k).getCardDisplay() << " and k is " << k << "\n";
                 k++;
             }
+            if((j+k)>=cardsPosessed.size()-1) {j=cardsPosessed.size()-2;/*std::cout << "end reached, j reduced by 2, j is" << j << "\n";*/} //minus 2, so that the loop incriments j to size-1 (which is the index of the final card in the thingy)
             //std::cout << "j is " << j << std::endl;std::cout << "k is " << k << std::endl;
-            if((j+k)>=cardsPosessed.size()-1) {j=cardsPosessed.size()-2;} //minus 2, so that the loop incriments j to size-1 (which is the index of the final card in the thingy)
-            
-            if(k!=0 && ((j-k)>=2 || (j-k)<=-2)) {j+=k;/*std::cout << "j has jumped, now" << j << "(not yet incrimented, will be incrimented next)\n";*/}
-            else {deadwood.push_back(j);} //deadwood.push_back(cardsPosessed[j].getIndex());
-            
-            //else {deadwood.push_back(cardsPosessed[j]);}
+            if(k!=0 && k>=2) {j+=k;/*std::cout << "Condition 2 tripped, add j to k. J is " << j << " and k is " << k << "\n";*/}
+            else {deadwood.push_back(j);/*std::cout << "Card bad, put its index into the deadwood deck. Index is (j) " << j << "\n";*/}
+            //std::cout << "j is " << j << std::endl;std::cout << "k is " << k << std::endl;
             
         }
-        
-        //if(deadwood[deadwood.size()-1].getIndex()/*most recent deadwood*/==cardsPosessed[cardsPosessed.size()-2].getIndex()/*Second to last player card*/) {deadwood.push_back(cardsPosessed[cardsPosessed.size()-1]);} //If the card that was just added to the deadwood vector is the same as the second-to-last card in the main deck, then the final card in the deck is deadwood (run-wise)
-        if(deadwood.size()-1/*most recent deadwood*/==cardsPosessed[cardsPosessed.size()-2].getIndex()/*Second to last player card*/) {deadwood.push_back(cardsPosessed.size()-1);} //If the card that was just added to the deadwood vector is the same as the second-to-last card in the main deck, then the final card in the deck is deadwood (run-wise)
-        else if (!(cardsPosessed[cardsPosessed.size()-2].getIndex()/*Second to last player card's index*/==cardsPosessed[cardsPosessed.size()-1].getIndex()-1/*last card*/)) {deadwood.push_back(cardsPosessed.size()-1);} //If the card in the hand of the player that is 1 from the end (second-to-last) is NOT one index number beneath the final card in the deck, then the last card is deadwood (run-wise)
-        //else if (!(cardsPosessed[cardsPosessed.size()-2].getIndex()/*Second to last player card*/==cardsPosessed[cardsPosessed.size()-1].getIndex()-1/*last card*/)) {deadwood.push_back(cardsPosessed[cardsPosessed.size()-1]);} //If the card in the hand of the player that is 1 from the end (second-to-last) is NOT one index number beneath the final card in the deck, then the last card is deadwood (run-wise)
-        
+        //std::cout << "Time to check the last card of this deck and see if it is a run\n";
+        //std::cout << "The last card is: " << cardsPosessed.at(deadwood.size()-1).getIndex() << "\n";
+        //std::cout << "Alpha " << cardsPosessed.at(deadwood.size()-1).getIndex() << " " << cardsPosessed.at(cardsPosessed.size()-2).getIndex() << "\n";
+        //std::cout << "Beta (negate) " << cardsPosessed.at(cardsPosessed.size()-2).getIndex() << " " << cardsPosessed.at(cardsPosessed.size()-1).getIndex()-1 << "\n";
+        if(cardsPosessed.at(deadwood.at(deadwood.size()-1)).getIndex()==cardsPosessed.at(cardsPosessed.size()-2).getIndex()) {deadwood.push_back(cardsPosessed.size()-1);} //If the card that was just added to the deadwood vector is the same as the second-to-last card in the main deck, then the final card in the deck is deadwood (run-wise)
+        else if (!(cardsPosessed.at(cardsPosessed.size()-2).getIndex()==cardsPosessed.at(cardsPosessed.size()-1).getIndex()-1)) {deadwood.push_back(cardsPosessed.size()-1);} //If the card in the hand of the player that is 1 from the end (second-to-last) is NOT one index number beneath the final card in the deck, then the last card is deadwood (run-wise)
+        //std::cout << "No deadwood in last slot\n";
         return deadwood;
-        /*
-            if((deadwood[deadwood.size()-1].getIndex()==cardsPosessed[cardsPosessed.size()-2].getIndex()) || (!(cardsPosessed[cardsPosessed.size()-2].getIndex()==cardsPosessed[cardsPosessed.end()].getIndex()-1))) {
-                deadwood.push_back(cardsPosessed.end());
-                This conditional doesn't work, because the first condition prevents the second one from being true if it is true*/
-        }
+        
+}
 
+//need to check for intersecting melds
 std::vector<int> Player::anySets(void) { //need to put in header file
     std::vector<int> deadwood = {};
         for(int i=0;i<cardsPosessed.size();i++) {
@@ -102,22 +99,27 @@ std::vector<int> Player::anySets(void) { //need to put in header file
         return deadwood;
 }
 
-//REMEMBER, DEADWOODINDEXES DOES NOT STORE THE INDEX THAT A CARD HAS (A CARD INDEX) BUT RATHER STORES THE INDEX OF THE LOCATION OF THE DEADWOOD IN THE DECK ARRAY
+//FIXME
 void Player::findDeadwood(void) {
     std::vector<int> deadwood = {};
     std::vector<int> runs = anyRuns();
     std::vector<int> sets = anySets();
+    //std::cout << "runs size is " << runs.size() << ", sets size is " << sets.size() << "\n";
     for(int i=0;i<sets.size();i++) {            //the vector used to get the size may need to be exchanged (originally runs, but problematic)
         bool match=false;
         for(int j=0;j<runs.size();j++) {
-            if(runs[i] == sets[j]) {
-                deadwood.push_back(i);
+            if(runs.at(j) == sets.at(i)) { //Originally an out of bounds unreported error with runs[i] == sets[j], the i and j are mixed up
+                deadwood.push_back(runs.at(j));
+                //std::cout << runs.at(j) << " equals " << sets.at(i) << " so I am putting it in deadwood vector\n";
+                std::cout << "j is: " << j << "\n";
+                std::cout << "i is: " << i << "\n";
             }
+            //else {std::cout << runs[j] << " DNE " << sets[i] << " so I am not putting it in deadwood\n";}
         }
     }
     deadWoodIndexes = deadwood;
-    /*
-    std::cout << "runs size is " << runs.size() << ", rets size is " << sets.size() << "\n";
+    
+    
     std::cout << "runs\n";
     for(int i=0;i<runs.size();i++) {
         std::cout << runs[i] << " ";
@@ -131,7 +133,7 @@ void Player::findDeadwood(void) {
         std::cout << deadWoodIndexes[i] << " ";
     }
     std::cout << "\n";
-    */
+    
 }
 
 int Player::countDeadWood() {
@@ -141,6 +143,16 @@ int Player::countDeadWood() {
     for(int i = 0; i < deadWoodIndexes.size(); i++) {
         points += cardsPosessed.at(deadWoodIndexes.at(i)).getCardPoints();
     }
+    std::cout << "The deadwood total points for this hand: " << points << "\n";
+    std::cout << "The deadwood in this hand: " << "\n";
+    for(int i = 0; i < deadWoodIndexes.size(); i++) {
+        std::cout << cardsPosessed.at(deadWoodIndexes.at(i)).getCardDisplay() << " ";
+    }
+    std::cout << "\nThe deadwood point vals in this hand are: \n";
+    for(int i = 0; i < deadWoodIndexes.size(); i++) {
+        std::cout << cardsPosessed.at(deadWoodIndexes.at(i)).getCardPoints() << " ";
+    }
+    std::cout << "\n";
     return points;
 }
 
@@ -152,7 +164,7 @@ int Player::getHandSize(void)
 // during the knocking phase, the non-knocking player calls this to attempt to send
 //  any card over which count towards another player's melds, thus decreasing the
 //  non-knocking player's deadwood count. Returns true if the card sent
-bool Player::knockSend(Player target, int cardOutIndex)
+bool Player::knockSend(Player& target, int cardOutIndex)
 {
     //calculate initial deadwoods
     target.findDeadwood();
@@ -177,4 +189,11 @@ bool Player::knockSend(Player target, int cardOutIndex)
     }
     
     return true;
+}
+
+Player& Player::operator=(const Player& playerIn)           // Overloaded equal operator
+{
+    cardsPosessed = playerIn.cardsPosessed;
+    name = playerIn.name;
+    deadWoodIndexes = playerIn.deadWoodIndexes;
 }

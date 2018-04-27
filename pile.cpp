@@ -45,6 +45,8 @@ void Pile::displayDebug()
 // generates a deck of 52 cards, shuffles using the randomgen
 void Pile::makeDeck()
 {
+    cardsPosessed.clear();
+    
     for (int i = 1; i <= 4; i++) {
         for (int j = 1; j <= 13; j++) {
             cardsPosessed.push_back(Card(j,i));
@@ -52,6 +54,11 @@ void Pile::makeDeck()
     }
     std::srand(time(0));
     std::random_shuffle(cardsPosessed.begin(), cardsPosessed.end(), randomgen);
+}
+
+void Pile::emptyDeck()
+{
+    cardsPosessed.clear();
 }
 
 //
@@ -71,4 +78,10 @@ std::string Pile::getTopCard()
 bool Pile::isEmpty()
 {
     return cardsPosessed.size() == 0;
+}
+
+Pile& Pile::operator=(const Pile& pileIn)           // Overloaded equal operator
+{
+    cardsPosessed = pileIn.cardsPosessed;
+    name = pileIn.name;
 }
