@@ -11,13 +11,15 @@ int main()
     // ask the player for their name
     std::cout << "\nWelcome to Gin Rummy! What is your name? ";
     std::string name;
-    getLine(std::cin, name);
+    std::getline(std::cin, name);
     
     Game game(name);
     
     game.initializeGame();
     
     do{
+        game.initializeRound();
+        
         //play a round of the game
         char roundStatus = game.playRound();
         
@@ -30,11 +32,18 @@ int main()
         }
         else {
             std::cout << "The stock pile is empty! No points awarded for this round!";
+            std::string temp;
+            std::cout << "Type anything to continue. ";
+            std::cin.ignore();
+            std::getline(std::cin,temp);
         }
     } while(game.checkWin() == '0');
     
     if(game.checkWin() == '1')
-        std::cout << endl << "Thank god you won now we can cease playing this accursed game\n";
+        std::cout << std::endl << "CONGRATS! You won!" << std::endl;
     else
-        std::cout << endl << "You lost to our shitty robot?? Jeez try to grow at least one brain cell next time\n";
+        std::cout << std::endl << "Sorry, you lost." << std::endl;
+        
+    std::cout << "The final score was:" << std::endl;
+    game.printScores();
 }

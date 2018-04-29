@@ -7,11 +7,13 @@ class Player: public Container {        // Players: They get to choose which car
     
     public:
         
+        Player();
         Player(std::string nameIn);     // token constructor
         Card sendCard();                // deletes a chosen card, but returns it
         Card sendCard(int index);
         void recieveCard(Card cardIn);  // adds card to possession, presumably from sendCard()
         void displayDebug();            // couts possession of cards, is actually used outside of debug
+        void clearHand();               // Clear players hand after each round
         std::string getName(); 
         bool knockSend(Player& target, int cardOutIndex);
         int getHandSize(void);          //this will usually be 10, but is needed during knocking

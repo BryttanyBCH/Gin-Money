@@ -6,6 +6,7 @@ class Pile: public Container {          // Piles: They can only exchange their t
     
     public:
         
+        Pile();
         Pile(std::string nameIn);       // token constructor
         Card sendCard();                // deletes card from posscession, but returns it
         void recieveCard(Card cardIn);  // adds card to possession, presumably from sendCard()
@@ -13,9 +14,8 @@ class Pile: public Container {          // Piles: They can only exchange their t
         void makeDeck();                // generates a deck of 52 cards
         void emptyDeck();
         std::string getName();           
-        std::string getTopCard();       // returns top card, rename?
+        std::string getTopCard();       // returns top card
         bool isEmpty();
-        //Card scan();
         
         Pile& operator=(const Pile& pileIn); 
         

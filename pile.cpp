@@ -6,18 +6,17 @@ int randomgen(int i)
     return std::rand() % i;
 }
 
-// token contructor
+// token contructors
+
+Pile::Pile()
+{
+    name = "Unknown";
+}
+
 Pile::Pile(std::string nameIn)
 {
     name = nameIn;
 }
-
-/*Card Pile::scan() //This is needed for the ai to take a card from the trash without actually taking it
-{
-    Card temp = cardsPosessed.back();
-    cardsPosessed.pop_back(); 
-    return temp;
-}*/
 
 // deletes card from posscession, but returns it
 Card Pile::sendCard()

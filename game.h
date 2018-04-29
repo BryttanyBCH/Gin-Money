@@ -14,6 +14,7 @@ class Game {
         char playRound();   //return '0' if no knock, '1' if p1 knocked, '2' if bot knocks
         void playerKnocked(bool wasPlayerOne);
         char checkWin();    //return '0' if no winner, '1' if p1, '2' if bot
+        void printScores();
     
     private:
         const int winPoints = 100;

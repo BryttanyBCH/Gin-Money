@@ -9,8 +9,10 @@
 class AI: public Player {                               // AI's parent class is player
     
     public:
-        AI(std::string name) : Player(name){lastCardIndex = -1;}
-        void takeTurn(Pile* stock, Pile* disc) ;         // do everything
+    
+        AI() : Player() {lastCardIndex = -1;}
+        AI(std::string name) : Player(name) {lastCardIndex = -1;}
+        void takeTurn(Pile* stock, Pile* disc);         // do everything
         bool willKnock(void);
         
         AI& operator=(const AI& aiIn);

@@ -27,7 +27,7 @@ void AI::takeTurn(Pile* stock, Pile* disc)
 bool AI::willKnock(void)
 {
     findDeadwood();
-    if(countDeadWood() < 5)
+    if(countDeadWood() < 10)
         return true;
     return false;
 }
@@ -76,7 +76,6 @@ bool AI::checkDiscard(Pile* disc, int startVal)
 int AI::removeIndex(int startVal)
 {
     Card temp;
-    std::cout << "Testing card removal\n";
     //declare a val to keep track of minimum deadwood added by a card's absence and one to keep an index
     int minDiff = 1000;
     int output = 0;
@@ -85,8 +84,6 @@ int AI::removeIndex(int startVal)
     for(int i = 0; i < cardsPosessed.size(); i++) {
         //copy the current card into temp
         temp = sendCard(i);
-        std::cout << "Instanced test removal deck\n";
-        displayDebug();
         //recalculate deadwood
         findDeadwood();
         int newDeadwood = countDeadWood();
