@@ -1,28 +1,21 @@
-http://www.dummies.com/games/card-games/gin-rummy/how-to-play-gin-rummy/
-# Gin-Rummy
-Gin Rummy For UNC Charlotte
+Welcome to Gin Rummy, By Nathan, Bryant, and Will for UNC Charlotte's ECGR 2104.
+Play Gin Rummy by gathering runs (cards within the same suit that have an ascending number value, like 9-10-J-Q-K)
+and sets (cards with different suits but the same number on them)
+Each turn, the player gets to pick which deck they would like to take a card from:
+the trash deck, where you can see which card you are getting, and the stock deck,
+where the player doesn't know what they'll get.
 
-♣ ♦ ♥ ♠
-1 2 3 4
-C D H S
+After you pick a card, enter the card's number (0-10) to choose which card you
+would like to put into the trash deck. You can choose to knock if you feel like 
+you have enough melds--knocking means that you're ready to see if you have more
+melds--and more importaintly, less deadwood--than your opponent. The AI can also knock, just like you.
 
-Aces=1 point
-Face card=10 points
-Numbered cards have a point value of their number
+If you knock with 10 cards in melds, you go "gin" and gain bonus points.
+If you have 11 cards that are all in melds, you have gone "big gin" and recieve
+even more bonus points. If you knock normally, you earn points for the point value
+difference of your deadwood--non-meld cards--vs your opponent's deadwood point count.
+Whoever hasn't knocked will have the chance to lower this defficite in deadwood, however.
+Deadwood cards will get transfered to the knocker's hand to reduce the non-knocker's
+deadwood count, reducing how many points that the knocker earns.
 
-Point Rules (From Wikipedia) Not sure these are complete
-Knock Points: When a player knocks, give the knocker |player1.hand-player2.hand| points
-    After a player knocks, and the lay offs are made, the knocking player receives a score equal to the difference between the two hands. For example, if a player knocks with 8, and the defender has 10 deadwood points in his or her hand after laying off, the knocking player receives 2 points for the hand.
-Gin Bonus: When a player calls gin, the player who called gin receives 25+opponent.deadwood
-    After going gin, a player receives a bonus of 25 points plus the entire count of deadwood in the opponent's hand. There is no chance to lay off when a player goes gin.
-Undercut (or underknocking): If the player knocks and this->deadwood <= opponent.deadwood, then they recieve the knock points + 25 points bonus
-    Occurs when the defending player has a deadwood count lower than or equal to that of the knocking player (this can occur either naturally or by laying off after a knock). In this case, the defender scores an undercut bonus of 25 points plus the difference in deadwood in the knocking player's hand. (In some rule sets, the bonus is only 10 or 20 points, or is not awarded in case of a tie.)
-Game Bonus: Maybe increase this limit to something like 250 or 300
-    Once a player has acquired 100 points (or some other agreed-upon number) the game is over, and that player receives a game bonus of 100 points (or another agreed-upon number).
-Line Bonus or Box Bonus: add this->wins*25 points for each of the players
-    Added at the end of the game. For every hand a player won during the game, 25 points is added to his or her score.
-Big Gin: 31+opponent.deadwood and keep the extra card (?
-    Prior to knocking, if all 11 cards in a player's hand form a legal gin, the player can retain the extra card as part of his or her hand, and is awarded 31 points plus entire count of deadwood in his or her opponent's hand. (In some rule sets players may be awarded 50 points or another established amount plus the entire count of deadwood in the opponent's hand)
-Shutout Bonus: if opponent.wins = 0, points*=2
-    If a game is completed with the winner having won every hand, the points for each hand are doubled before adding the line bonus. 
-    
+Have fun!
