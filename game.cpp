@@ -7,7 +7,8 @@ Game::Game(std::string playerName)
     Pile s("Stock");
     Pile d("Discard");
     Player p(playerName);
-    AI b("UnbeataBill");
+    
+    AI b("Count Deadwood");
     Interface i("Gin Money");
     
     stock = s;
@@ -45,6 +46,7 @@ void Game::initializeRound()
     for (int i = 1; i <= 10; i++)
         bot.recieveCard(stock.sendCard());
     
+        
     Card blank;
     disc.recieveCard(blank);
     disc.recieveCard(stock.sendCard());
@@ -61,19 +63,27 @@ char Game::playRound()
         // player choses deck to pick a card from
         std::cout << "What deck you wanna get from? (1 is stock, 2 is discard)\n";
         std::string input;
-        std::cin >> input;
+
         
-        if (input == "1") {
-            p1.recieveCard(stock.sendCard());
-        } else {
-            p1.recieveCard(disc.sendCard());
+        while(input!="1" && input!="2") {
+            std::cin >> input;
+            if (input == "1") {p1.recieveCard(stock.sendCard());} 
+            else if (input == "2") {p1.recieveCard(disc.sendCard());}
+            else {std::cout<< "Invalid input, enter either 1 or 2\n";}
         }
-        
         // refresh display, discard a card
+        p1.findDeadwood();
+        
         intf.mainGameDisplay(p1, bot, stock, disc);
+        
+        // Check for Big Gin
+        if(p1.countDeadWood()==0)
+            return '1';
+
         std::cout << "Ok what card do you want to throw away from your deck\n";
         disc.recieveCard(p1.sendCard());
         intf.mainGameDisplay(p1, bot, stock, disc);
+        
         
         std::cout << "Would you like to knock? Enter y or n." << std::endl;
         std::string knock;
@@ -106,6 +116,36 @@ void Game::playerKnocked(bool wasPlayerOne)
     Player knocker = bot;
     Player defender = p1;
     
+    /*** BIG GIN CASE ***/
+    if(wasPlayerOne) {
+        if(p1.getHandSize() == 11) {
+            std::cout << "You have Big Gin!\n";
+            std::cout << "Congratulations! You get a bonus of 31 points!\n";
+            p1Points += 25;
+            
+            std::string temp;
+            std::cout << "Type anything to continue. ";
+            std::cin.ignore();
+            std::getline(std::cin,temp);
+            return;
+        }
+    }
+    /*** BIG GIN FOR AI ***/
+    else {
+        if(bot.getHandSize() == 11) {
+            std::cout << "The AI got Big Gin!\n";
+            std::cout << "It gets a bonus of 31 points!\n";
+            botPoints += 25;
+            
+            std::string temp;
+            std::cout << "Type anything to continue. ";
+            std::cin.ignore();
+            std::getline(std::cin,temp);
+            return;
+        }
+    }
+    /*** END BIG GIN CASES ***/
+    
     if(wasPlayerOne) {
         knocker = p1;
         defender = bot;
@@ -131,7 +171,13 @@ void Game::playerKnocked(bool wasPlayerOne)
     
     /*** THE PLAYER KNOCKED ***/
     if(wasPlayerOne) {
-        if(defenderDW < knockerDW) {
+        
+        if(knockerDW == 0) {
+            std::cout << "You have 10 cards in melds, so you have gone Gin by knocking!\n";
+            std::cout << "Congradulations! You get 25 points!\n";
+            p1Points += 25;
+        }
+        else if(defenderDW < knockerDW) {
             std::cout << "After laying off their cards, the AI had less deadwood than you!\n";
             std::cout << "They get a 25 point undercut bonus!\n";
             std::cout << "The AI also gains the difference in the deadwood, " 
@@ -156,7 +202,13 @@ void Game::playerKnocked(bool wasPlayerOne)
     /*** THE AI KNOCKED ***/
     else {
         std::cout << "The AI knocked!!!\n";
-        if(defenderDW < knockerDW) {
+        
+        if(knockerDW == 0) {
+            std::cout << "The AI had 10 cards in melds, and so it got Gin. Whoops.\n";
+            std::cout << "The AI got 25 points.\n";
+            botPoints += 25;
+        }
+        else if(defenderDW < knockerDW) {
             std::cout << "After laying off your cards, you had less deadwood than the AI!\n";
             std::cout << "You get a 25 point undercut bonus!\n";
             std::cout << "You also gain the difference in the deadwood, " 

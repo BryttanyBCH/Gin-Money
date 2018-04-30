@@ -33,7 +33,7 @@ void Pile::recieveCard(Card cardIn)
 }
 
 // couts the possessed cards, for debugging
-void Pile::displayDebug()
+void Pile::displayHand()
 {
     for (auto e : cardsPosessed) {
         std::cout << e.getCardDisplay();

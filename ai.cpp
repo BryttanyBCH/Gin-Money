@@ -17,6 +17,10 @@ void AI::takeTurn(Pile* stock, Pile* disc)
     findDeadwood();
     int newDeadwood = countDeadWood();
     
+    //breaks and doesn't discard if the AI has Big Gin
+    if(newDeadwood == 0)
+        return;
+    
     //find which index to discard from
     int discard = removeIndex(newDeadwood);
     
@@ -27,7 +31,7 @@ void AI::takeTurn(Pile* stock, Pile* disc)
 bool AI::willKnock(void)
 {
     findDeadwood();
-    if(countDeadWood() < 10)
+    if(countDeadWood() < 10)        
         return true;
     return false;
 }

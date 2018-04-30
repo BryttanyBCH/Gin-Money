@@ -16,7 +16,6 @@ Interface::Interface(std::string nameIn)
 void Interface::preDealDisplay(Player p1, Player p2)
 {
     system("tput clear");
-    std::cout << "Welcome 2 Gin Rummie enter anything to start" << std::endl;
     std::cout << p2.getName() << std::endl;
     std::cout << "[   ][   ][   ][   ][   ][   ][   ][   ][   ][   ]" << std::endl;
     std::cout << "                                                  " << std::endl;
@@ -38,27 +37,28 @@ void Interface::mainGameDisplay(Player p1, Player p2, Pile draw, Pile trash)
     system("tput clear");
     
     std::cout << p2.getName() << std::endl;
-    //p2.displayDebug();
+    //p2.displayHand();
     std::cout << "[XXX][XXX][XXX][XXX][XXX][XXX][XXX][XXX][XXX][XXX]" << std::endl;
     std::cout << "                                                  " << std::endl;
     std::cout << "                                                  " << std::endl;
     std::cout << "                                                  " << std::endl;
     std::cout << "            [DRW]            "<< trash.getTopCard() << "               " << std::endl;
+    std::cout << "              1                2                  " << std::endl;
     std::cout << "                                                  " << std::endl;
     std::cout << "                                                  " << std::endl;
-    std::cout << "                                                  " << std::endl;
-    p1.displayDebug();
+    p1.displayHand();
     std::cout << "  0    1    2    3    4    5    6    7    8    9    10" << std::endl;     // need 10 for switching out cards
-    std::cout << p1.getName() << std::endl;
+    p1.findDeadwood();
+    std::cout << p1.getName() << "     Your Deadwood: " << p1.countDeadWood() << std::endl;
     return;
 }
 
 void Interface::knockDisplay(Player p1, Player p2, Pile draw, Pile trash)
 {
     system("tput clear");
-    
-    std::cout << p2.getName() << std::endl;
-    p2.displayDebug();
+    p2.findDeadwood();
+    std::cout << p2.getName() << "     Bot Deadwood: " << p2.countDeadWood() << std::endl;
+    p2.displayHand();
     std::cout << "                                                  " << std::endl;
     std::cout << "                                                  " << std::endl;
     std::cout << "                                                  " << std::endl;
@@ -66,8 +66,9 @@ void Interface::knockDisplay(Player p1, Player p2, Pile draw, Pile trash)
     std::cout << "                                                  " << std::endl;
     std::cout << "                                                  " << std::endl;
     std::cout << "                                                  " << std::endl;
-    p1.displayDebug();
-    std::cout << "  0    1    2    3    4    5    6    7    8    9  " << std::endl;
-    std::cout << p1.getName() << std::endl;
+    p1.displayHand();
+    std::cout << "  0    1    2    3    4    5    6    7    8    9    10" << std::endl;
+    p1.findDeadwood();
+    std::cout << p1.getName() << "     Your Deadwood: " << p1.countDeadWood() << std::endl;
     return;
 }

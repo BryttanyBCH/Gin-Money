@@ -1,4 +1,5 @@
-#include<iostream>
+#include <iostream>
+#include <string>
 #include "pile.h"
 #include "player.h"
 #include "interface.h"
@@ -12,6 +13,9 @@ int main()
     std::cout << "\nWelcome to Gin Rummy! What is your name? ";
     std::string name;
     std::getline(std::cin, name);
+    
+    if(name.compare(" ") == 0 || name.compare("\n"))
+        name = "UnbeataBill";
     
     Game game(name);
     

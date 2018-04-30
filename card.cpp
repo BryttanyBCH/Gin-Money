@@ -62,13 +62,3 @@ Card& Card::operator=(const Card& cardIn)           // Overloaded equal operator
     cardIndex = cardIn.cardIndex;
     cardSuit = cardIn.cardSuit;
 }
-
-//These operators are now defined inline in the card header file
-/*bool Card::operator<(Card& right) {return this.cardPoints < right.cardPoints;}
-bool Card::operator>(Card& right) {return this.cardPoints > right.cardPoints;}
-bool Card::operator<=(Card& right) {return this.cardPoints <= right.cardPoints;}
-bool Card::operator>=(Card& right) {return this.cardPoints >= right.cardPoints;}
-bool Card::operator==(Card&right) {return this.cardPoints == right.cardPoints;}
-bool Card::operator!=(Card&right) {return this.cardPoints != right.cardPoints;}*/
-
-

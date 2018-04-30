@@ -12,7 +12,7 @@ class Container             // containers are things that hold cards, like like 
         
         virtual Card sendCard() = 0;
         virtual void recieveCard(Card cardIn) = 0;
-        virtual void displayDebug() = 0;
+        virtual void displayHand() = 0;
         virtual std::string getName() = 0;
     
 };

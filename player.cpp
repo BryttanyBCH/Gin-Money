@@ -11,7 +11,7 @@ bool comp(Card c1, Card c2)
 // token constructors
 Player::Player()
 {
-    name = "Unknown";
+    name = "UnbeataBill";
 }
 
 Player::Player(std::string nameIn)
@@ -57,7 +57,7 @@ void Player::recieveCard(Card cardIn)
 }
 
 // couts possession of cards, is actually used outside of debug
-void Player::displayDebug()
+void Player::displayHand()
 {
     for (auto e : cardsPosessed) {
         std::cout << e.getCardDisplay();
@@ -74,35 +74,40 @@ std::string Player::getName()
 std::vector<int> Player::anyRuns(void) { //need to put in header file vector<Card> startPos=deckIn iterator dumb int good 
     std::vector<int> runs = {};
     
+    if(cardsPosessed.size()!=0) { //this is a safeguard just in case that the runs vector is 0 (the program will throw an out of bounds even if the for loop condition is initially failed)
         for(int j=0;j<cardsPosessed.size()-1;j++) { //The last card of the vector should not be called in this loop
             
             int k=0;
             
             //this while loop used to check the card that was at k, but k was fixed so that it started at zero. That is why only the first few parts of the deck got checked
-            while((j+k+1<cardsPosessed.size()-1) && (cardsPosessed.at(j+k+1).getIndex() == cardsPosessed.at(j+k).getIndex()+1) && (cardsPosessed.at(j+k+1).getSuit() == cardsPosessed.at(j+k).getSuit())) {
+            
+            while((j+k+1<cardsPosessed.size()-1) && (cardsPosessed.at(j+k+1).getIndex() == cardsPosessed.at(j+k).getIndex()+1) && (cardsPosessed.at(j+k+1).getSuit() == cardsPosessed.at(j+k).getSuit())) { 
+                //(current card+1 is less than size-1) && next card's index = current card's index + 1 && next card's suit == current card's suit
                 k++;
             }
             if((j+k)>=cardsPosessed.size()-1) {j=cardsPosessed.size()-2;} //minus 2, so that the loop incriments j to size-1 (which is the index of the final card in the thingy)
-            if(k>=2) {
-                for(int x=j+k;x>=j;x--) {runs.push_back(x);}
+            if(k>=2) { //if those cards were runs
+                for(int x=j+k;x>=j;x--) {runs.push_back(x);} //add those cards to the deck
                 j+=k;
             }
-            //else {runs.push_back(j);}
-            
         }
+    //check if the final card is a run
         if(runs.size()>=2) {
             if((cardsPosessed.at(cardsPosessed.size()-1).getIndex() == cardsPosessed.at(runs.size()-1).getIndex()+1) && (cardsPosessed.at(cardsPosessed.size()-1)).getSuit() == cardsPosessed.at(runs.size()-1).getSuit()) {
+                //If the final card's index (of the player's hand) == the card index of the card in the player's hand at the final index of runs +1 AND both card's suits match
                 if((cardsPosessed.at(cardsPosessed.size()-1).getIndex() == cardsPosessed.at(runs.size()-2).getIndex()+2) && (cardsPosessed.at(cardsPosessed.size()-1).getSuit() == cardsPosessed.at(runs.size()-2).getSuit())) {
-                    runs.push_back(cardsPosessed.size()-1);
+                    //If the final card's index (of the player's hand) == the card index of the card in the player's hand at the final index of runs +2 AND both these card's suits match
+                    runs.push_back(cardsPosessed.size()-1); //then the final card is a run, put it in the runs vector
                 }
             }
         }
-        return runs;
-        
+    }
+    
+    return runs;
 }
 
-//need to check for intersecting melds
-std::vector<int> Player::anySets(void) { //need to put in header file
+
+std::vector<int> Player::anySets(void) { 
     std::vector<int> sets = {};
         for(int i=0;i<cardsPosessed.size();i++) {
             int matches=0;
@@ -115,7 +120,6 @@ std::vector<int> Player::anySets(void) { //need to put in header file
 }
 
 
-//FIXME add intersecting meld checker
 void Player::findDeadwood(void) {
     std::vector<int> crossMelds = {};
     std::vector<int> deadwood = {};
@@ -141,75 +145,73 @@ void Player::findDeadwood(void) {
     std::vector<int> tempSetsTest = {}; //The melds of a meld type go here to later be scored
     int runsPoints=0;
     int setsPoints=0;
-
-                for(int runsIndexTemp=0;runsIndexTemp<runs.size();runsIndexTemp++) {
-                    if(runs.at(runsIndexTemp) != *it) {
-                        tempRuns.push_back(runs.at(runsIndexTemp));
-                    }
-                }
+    //find the intersecting meld cards and put them into vectors that store them
+    for(int runsIndexTemp=0;runsIndexTemp<runs.size();runsIndexTemp++) {
+        if(runs.at(runsIndexTemp) != *it) {
+            tempRuns.push_back(runs.at(runsIndexTemp));
+        }
+    }
                 
-                for(int setsIndexTemp=0;setsIndexTemp<sets.size();setsIndexTemp++) {
-                    if(sets.at(setsIndexTemp) != *it) {
-                        //thanks gdb
-                        tempSets.push_back(sets.at(setsIndexTemp));
-                    }
-                }
-                
-                //Preferably I would make an anyRuns/anySets function that would take in a vector argument but I don't have time so I won't
-                
-                //replaced cardsPosessed with tempRuns and runs with tempRunsTest
-                if(tempRuns.size()!=0) {
-                    for(int j=0;j<tempRuns.size()-1;j++) { //The last card of the vector should not be called in this loop
-                        int k=0;
-                        while((j+k+1<tempRuns.size()-1) && (cardsPosessed.at(tempRuns.at(j+k+1)).getIndex() == cardsPosessed.at(tempRuns.at(j+k)).getIndex()+1) && (cardsPosessed.at(tempRuns.at(j+k+1)).getSuit() == cardsPosessed.at(tempRuns.at(j+k)).getSuit())) {k++;}
-                        if((j+k)>=tempRuns.size()-1) {j=tempRuns.size()-2;} 
-                        if(k>=2) {
-                            for(int x=j+k;x>=j;x--) {tempRunsTest.push_back(x);}
-                        j+=k;
-                        }
-                    }
-                    if(tempRunsTest.size()>=2) {
-                        if((cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getIndex() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-1)).getIndex()+1) && (cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getSuit() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-1)).getSuit())) {
-                            if((cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getIndex() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-2)).getIndex()+2) && (cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getSuit() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-2)).getSuit())) {
-                                tempRunsTest.push_back(tempRuns.size()-1);
-                            }
-                         }
-                    }
-                }
-                //replaced cardsPosessed with tempSets and sets with tempSetsTest
-        
-                for(int i=0;i<tempSets.size();i++) {
-                    int matches=0;
-                    for(int j=0;j<tempSets.size();j++) {
-                        if(((cardsPosessed.at(tempSets.at(j)).getIndex())%13)==((cardsPosessed.at(tempSets.at(i)).getIndex())%13)) {matches++;} 
-                    }
-                    if(matches>=3) {tempSetsTest.push_back(i);}
-                }
-                
-                //A deck that has a higher total point value lying inside melds will naturally have less deadwood than a deck with less points in melds
-                //Therefore we don't need to convert the meld decks to deadwood for now
-                
-                //Find the point values for cards in the runs meld deck (tempRunsTest)
-                
-                for(int i = 0; i < tempRunsTest.size(); i++) {
-                    runsPoints += cardsPosessed.at(tempRunsTest.at(i)).getCardPoints();
-                }
-                
-                //Find the point values for cards in the sets meld deck (tempRunsTest)
-                
-                for(int i = 0; i < tempSetsTest.size(); i++) {
-                    setsPoints += cardsPosessed.at(tempSetsTest.at(i)).getCardPoints();
-                }
-        
-                //depending on which meld deck is worth more points, 
-                //replace the other meld type vector with the vector that doesn't have the intersecting card,
-                //and leave that formerly intersecting card in the other deck
-        
-                if(setsPoints>runsPoints) {runs=tempRunsTest;} //this conditional pair gives the ai a preference for sets
-                else {sets=tempSetsTest;}
-    
+    for(int setsIndexTemp=0;setsIndexTemp<sets.size();setsIndexTemp++) {
+        if(sets.at(setsIndexTemp) != *it) {
+            //thanks gdb
+            tempSets.push_back(sets.at(setsIndexTemp));
+        }
     }
     
+    //These following methods are very similar to anyRuns() and anySets            
+    //replaced cardsPosessed with tempRuns and runs with tempRunsTest
+    if(tempRuns.size()!=0) {
+        for(int j=0;j<tempRuns.size()-1;j++) { //The last card of the vector should not be called in this loop
+            int k=0;
+            while((j+k+1<tempRuns.size()-1) && (cardsPosessed.at(tempRuns.at(j+k+1)).getIndex() == cardsPosessed.at(tempRuns.at(j+k)).getIndex()+1) && (cardsPosessed.at(tempRuns.at(j+k+1)).getSuit() == cardsPosessed.at(tempRuns.at(j+k)).getSuit())) {k++;}
+            if((j+k)>=tempRuns.size()-1) {j=tempRuns.size()-2;} 
+            if(k>=2) {
+                for(int x=j+k;x>=j;x--) {tempRunsTest.push_back(x);}
+            j+=k;
+            }
+        }
+        if(tempRunsTest.size()>=2) {
+            if((cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getIndex() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-1)).getIndex()+1) && (cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getSuit() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-1)).getSuit())) {
+                if((cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getIndex() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-2)).getIndex()+2) && (cardsPosessed.at(tempRuns.at(tempRuns.size()-1)).getSuit() == cardsPosessed.at(tempRuns.at(tempRunsTest.size()-2)).getSuit())) {
+                    tempRunsTest.push_back(tempRuns.size()-1);
+                }
+             }
+        }
+    }
+    //replaced cardsPosessed with tempSets and sets with tempSetsTest
+    
+    for(int i=0;i<tempSets.size();i++) {
+        int matches=0;
+        for(int j=0;j<tempSets.size();j++) {
+            if(((cardsPosessed.at(tempSets.at(j)).getIndex())%13)==((cardsPosessed.at(tempSets.at(i)).getIndex())%13)) {matches++;} 
+        }
+        if(matches>=3) {tempSetsTest.push_back(i);}
+    }
+    
+    //A deck that has a higher total point value lying inside melds will naturally have less deadwood than a deck with less points in melds
+    //Therefore we don't need to convert the meld decks to deadwood for now
+    
+    //Find the point values for cards in the runs meld deck (tempRunsTest)
+    
+    for(int i = 0; i < tempRunsTest.size(); i++) {
+        runsPoints += cardsPosessed.at(tempRunsTest.at(i)).getCardPoints();
+    }
+    
+    //Find the point values for cards in the sets meld deck (tempRunsTest)
+    
+    for(int i = 0; i < tempSetsTest.size(); i++) {
+        setsPoints += cardsPosessed.at(tempSetsTest.at(i)).getCardPoints();
+    }
+    
+    //depending on which meld deck is worth more points, 
+    //replace the other meld type vector with the vector that doesn't have the intersecting card,
+    //and leave that formerly intersecting card in the other deck
+    
+    if(setsPoints>runsPoints) {runs=tempRunsTest;} //this conditional pair gives the ai a preference for runs, it can be reversed to give sets a preference
+    else {sets=tempSetsTest;}
+    
+    }
     
     //Finding absent indexes, and putting them into a deadwood deck
     for(int i=0;i<cardsPosessed.size();i++) {
