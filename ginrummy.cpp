@@ -14,7 +14,7 @@ int main()
     std::string name;
     std::getline(std::cin, name);
     
-    if(name.compare(" ") == 0 || name.compare("\n"))
+    if(name.compare(" ") == 0 || name.empty()) 
         name = "UnbeataBill";
     
     Game game(name);
