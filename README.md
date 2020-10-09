@@ -1,4 +1,4 @@
-Welcome to Gin Rummy, By Nathan, Bryant, and Will for UNC Charlotte's ECGR 2104.
+Welcome to Gin Rummy, By Nathan, Bryttany, and Will for UNC Charlotte's ECGR 2104.
 Play Gin Rummy by gathering runs (cards within the same suit that have an ascending number value, like 9-10-J-Q-K)
 and sets (cards with different suits but the same number on them)
 Each turn, the player gets to pick which deck they would like to take a card from:
